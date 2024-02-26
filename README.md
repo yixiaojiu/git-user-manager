@@ -2,6 +2,10 @@
 
 reference [lexmin0412/gcm.git](https://github.com/lexmin0412/gcm.git)
 
+When you develop for your company and your own projects, you need to switch `user.name` and `user.email` frequently.
+
+This CLI tool is capable of managing the Git user configuration for multiple users efficiently, which will help a lot.
+
 ## Install
 
 ```sh
