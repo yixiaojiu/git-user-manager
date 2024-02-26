@@ -1,5 +1,13 @@
 # Git User Manager
 
+reference [lexmin0412/gcm.git](https://github.com/lexmin0412/gcm.git)
+
+## Install
+
+```sh
+cargo install --git https://github.com/yixiaojiu/git-user-manager
+```
+
 ## Usage
 
 ```
