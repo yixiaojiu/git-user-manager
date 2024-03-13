@@ -57,7 +57,6 @@ impl UserOperator {
 
     pub async fn set_user(&mut self, user: User) -> Result<(), Box<dyn std::error::Error>> {
         self.users.push(user);
-        self.sync_config().await?;
         Ok(())
     }
 
@@ -71,7 +70,6 @@ impl UserOperator {
 
     pub async fn remove_user(&mut self, alias: &str) -> Result<(), Box<dyn std::error::Error>> {
         self.users.retain(|user| user.alias != alias);
-        self.sync_config().await?;
         Ok(())
     }
 }

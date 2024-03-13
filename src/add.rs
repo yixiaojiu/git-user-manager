@@ -11,8 +11,10 @@ pub struct AddArgs {
     pub email: String,
 }
 
-pub async fn add(args: &AddArgs) -> Result<(), Box<dyn std::error::Error>> {
-    let mut user_operator = UserOperator::new().await;
+pub async fn add(
+    args: &AddArgs,
+    user_operator: &mut UserOperator,
+) -> Result<(), Box<dyn std::error::Error>> {
     user_operator
         .set_user(User {
             alias: args.alias.clone(),
@@ -21,6 +23,7 @@ pub async fn add(args: &AddArgs) -> Result<(), Box<dyn std::error::Error>> {
         })
         .await?;
 
+    println!();
     println!("{} added successfully", paint_yellow(args.alias.as_str()),);
     Ok(())
 }

@@ -9,8 +9,10 @@ pub struct RemoveArgs {
     pub alias: String,
 }
 
-pub async fn remove(args: &RemoveArgs) -> Result<(), Box<dyn std::error::Error>> {
-    let mut user_operator = UserOperator::new().await;
+pub async fn remove(
+    args: &RemoveArgs,
+    user_operator: &mut UserOperator,
+) -> Result<(), Box<dyn std::error::Error>> {
     user_operator.remove_user(&args.alias).await?;
     println!("{} removed successfully", paint_yellow(args.alias.as_str()));
 

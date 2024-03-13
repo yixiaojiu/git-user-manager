@@ -6,6 +6,7 @@ mod user;
 mod utils;
 
 use clap::{Parser, Subcommand};
+use user::UserOperator;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None, styles = utils::get_clap_styles())]
@@ -25,21 +26,24 @@ enum Commands {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
+    let mut user_operator = UserOperator::new().await;
 
     match &cli.command {
         Commands::Add(args) => {
-            add::add(args).await?;
+            add::add(args, &mut user_operator).await?;
         }
         Commands::Remove(args) => {
-            remove::remove(args).await?;
+            remove::remove(args, &mut user_operator).await?;
         }
         Commands::List(_) => {
-            list::list_users().await;
+            list::list_users(&user_operator).await;
         }
         Commands::Use(args) => {
-            use_config::use_config(args).await?;
+            use_config::use_config(args, &user_operator).await?;
         }
     }
+
+    user_operator.sync_config().await?;
 
     Ok(())
 }

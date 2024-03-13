@@ -1,4 +1,7 @@
-use crate::{user::UserOperator, utils::paint_green};
+use crate::{
+    user::UserOperator,
+    utils::{paint_green, paint_yellow},
+};
 use clap::Args;
 
 /// list all user config
@@ -7,9 +10,15 @@ use clap::Args;
 #[command(version, about, long_about = None)]
 pub struct RemoveArgs {}
 
-pub async fn list_users() {
-    let user_operator = UserOperator::new().await;
+pub async fn list_users(user_operator: &UserOperator) {
     let users = user_operator.get_users();
+
+    println!();
+    if users.len() == 0 {
+        println!("{}", 
+        paint_yellow("It seems that there is no available configuration. Use the `gum add` to add the configuration."));
+        return;
+    }
 
     let output = users
         .iter()
@@ -23,6 +32,5 @@ pub async fn list_users() {
         })
         .collect::<Vec<String>>()
         .join("\n");
-    println!();
     println!("{}", output);
 }

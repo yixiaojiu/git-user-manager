@@ -18,8 +18,10 @@ pub struct UseArgs {
     pub global: bool,
 }
 
-pub async fn use_config(args: &UseArgs) -> Result<(), Box<dyn std::error::Error>> {
-    let user_operator = UserOperator::new().await;
+pub async fn use_config(
+    args: &UseArgs,
+    user_operator: &UserOperator,
+) -> Result<(), Box<dyn std::error::Error>> {
     let user = user_operator.get_user(&args.alias);
 
     let flag = if args.global {
