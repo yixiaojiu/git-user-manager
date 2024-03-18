@@ -23,7 +23,6 @@ pub async fn include(
     args: &IncludeArgs,
     user_operator: &mut UserOperator,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    // git config --global includeif.gitdir:~/Videos.path ./aaa
     let user = match user_operator.get_user(&args.alias) {
         Some(user) => user,
         None => {
@@ -49,8 +48,6 @@ pub async fn include(
             .unwrap();
     }
 
-    // file.seek(std::io::SeekFrom::Start(0)).await?;
-    // file.set_len(0).await?;
     file.write_all(config_content.as_bytes()).await?;
     file.sync_data().await?;
 
