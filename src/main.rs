@@ -1,4 +1,5 @@
 mod add;
+mod include;
 mod list;
 mod remove;
 mod use_config;
@@ -21,6 +22,7 @@ enum Commands {
     Remove(remove::RemoveArgs),
     List(list::RemoveArgs),
     Use(use_config::UseArgs),
+    Include(include::IncludeArgs),
 }
 
 #[tokio::main]
@@ -40,6 +42,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         Commands::Use(args) => {
             use_config::use_config(args, &user_operator).await?;
+        }
+        Commands::Include(args) => {
+            include::include(args, &mut user_operator).await?;
         }
     }
 

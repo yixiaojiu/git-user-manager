@@ -22,7 +22,13 @@ pub async fn use_config(
     args: &UseArgs,
     user_operator: &UserOperator,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let user = user_operator.get_user(&args.alias);
+    let user = match user_operator.get_user(&args.alias) {
+        Some(user) => user,
+        None => {
+            println!("{} not found", paint_yellow(args.alias.as_str()));
+            return Ok(());
+        }
+    };
 
     let flag = if args.global {
         "--global"
@@ -31,6 +37,7 @@ pub async fn use_config(
     } else {
         ""
     };
+
     let set_name_args = ["config", flag, "user.name", &user.name];
     let set_email_args = ["config", flag, "user.email", &user.email];
 

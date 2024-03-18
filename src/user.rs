@@ -1,6 +1,6 @@
-use dirs::data_dir;
+use crate::utils::create_data_dir;
 use serde::{Deserialize, Serialize};
-use tokio::fs::{create_dir_all, File, OpenOptions};
+use tokio::fs::{File, OpenOptions};
 use tokio::io::{AsyncReadExt, AsyncSeekExt, AsyncWriteExt};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -17,12 +17,7 @@ pub struct UserOperator {
 
 impl UserOperator {
     pub async fn new() -> Self {
-        let mut path_buf = data_dir().unwrap();
-        path_buf.push("gum");
-
-        if !path_buf.exists() {
-            create_dir_all(&path_buf).await.unwrap();
-        }
+        let mut path_buf = create_data_dir().await.unwrap();
 
         path_buf.push("data.json");
 
@@ -60,8 +55,8 @@ impl UserOperator {
         Ok(())
     }
 
-    pub fn get_user(&self, alias: &str) -> &User {
-        self.users.iter().find(|user| user.alias == alias).unwrap()
+    pub fn get_user(&self, alias: &str) -> Option<&User> {
+        self.users.iter().find(|user| user.alias == alias)
     }
 
     pub fn get_users(&self) -> &Vec<User> {
