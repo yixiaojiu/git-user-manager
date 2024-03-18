@@ -38,7 +38,8 @@ pub async fn use_config(
     let email_command_output = Command::new("git").args(set_email_args).output().await?;
 
     if name_command_output.status.success() && email_command_output.status.success() {
-        println!("{} used config success", paint_yellow(args.alias.as_str()));
+        println!();
+        println!("{} is used successfully", paint_yellow(args.alias.as_str()));
     }
 
     Ok(())

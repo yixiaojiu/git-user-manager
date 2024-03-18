@@ -33,7 +33,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             add::add(args, &mut user_operator).await?;
         }
         Commands::Remove(args) => {
-            remove::remove(args, &mut user_operator).await?;
+            remove::remove(args, &mut user_operator);
         }
         Commands::List(_) => {
             list::list_users(&user_operator).await;

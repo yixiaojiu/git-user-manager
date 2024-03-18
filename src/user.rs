@@ -68,8 +68,11 @@ impl UserOperator {
         &self.users
     }
 
-    pub async fn remove_user(&mut self, alias: &str) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn remove_user(&mut self, alias: &str) {
         self.users.retain(|user| user.alias != alias);
-        Ok(())
+    }
+
+    pub fn remove_all(&mut self) {
+        self.users = vec![];
     }
 }
