@@ -10,11 +10,11 @@ pub struct UseArgs {
     pub alias: String,
 
     /// set local config
-    #[arg(short, long, default_value = "true")]
+    #[arg(short, long)]
     pub local: bool,
 
-    /// set global config
-    #[arg(short, long)]
+    /// set global config, default value
+    #[arg(short, long, default_value = "true")]
     pub global: bool,
 }
 
@@ -30,10 +30,10 @@ pub async fn use_config(
         }
     };
 
-    let flag = if args.global {
-        "--global"
-    } else if args.local {
+    let flag = if args.local {
         "--local"
+    } else if args.global {
+        "--global"
     } else {
         ""
     };
