@@ -1,6 +1,6 @@
 [package]
 name = "git-user-manager"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["yixiaojiu <yi_xiao_jiu@qq.com>"]
 edition = "2021"
 repository = "https://github.com/yixiaojiu/git-user-manager"

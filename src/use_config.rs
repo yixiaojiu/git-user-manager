@@ -10,11 +10,11 @@ pub struct UseArgs {
     pub alias: String,
 
     /// set local config
-    #[arg(short, long)]
+    #[arg(short, long, default_value = "true")]
     pub local: bool,
 
     /// set global config, default value
-    #[arg(short, long, default_value = "true")]
+    #[arg(short, long)]
     pub global: bool,
 }
 
