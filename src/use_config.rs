@@ -1,5 +1,5 @@
 use crate::user::UserOperator;
-use crate::utils::paint_yellow;
+use crate::utils::{handle_command_error, paint_yellow};
 use clap::Args;
 use tokio::process::Command;
 
@@ -9,11 +9,11 @@ use tokio::process::Command;
 pub struct UseArgs {
     pub alias: String,
 
-    /// set local config
-    #[arg(short, long, default_value = "true")]
+    /// set local config, default value
+    #[arg(short, long)]
     pub local: bool,
 
-    /// set global config, default value
+    /// set global config
     #[arg(short, long)]
     pub global: bool,
 }
@@ -35,7 +35,7 @@ pub async fn use_config(
     } else if args.global {
         "--global"
     } else {
-        ""
+        "--local"
     };
 
     let set_name_args = ["config", flag, "user.name", &user.name];
@@ -46,7 +46,14 @@ pub async fn use_config(
 
     if name_command_output.status.success() && email_command_output.status.success() {
         println!();
-        println!("{} is used successfully", paint_yellow(args.alias.as_str()));
+        println!(
+            "{} is successfully used {}ly",
+            paint_yellow(args.alias.as_str()),
+            &flag[2..]
+        );
+    } else {
+        handle_command_error(&name_command_output);
+        handle_command_error(&email_command_output);
     }
 
     Ok(())
