@@ -23,6 +23,7 @@ Commands:
   list    list all user config
   use     use alias to change git user config
   include  conditional include, reference https://git-scm.com/docs/git-config#_conditional_includes
+  info     View git username and email configuration
   help    Print this message or the help of the given subcommand(s)
 
 Options:
